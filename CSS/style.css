@@ -1,18 +1,32 @@
 body {
     text-align: center;
     margin: 0;
+    background: linear-gradient(bottom, rgba(0,0,0,1), rgba(0,0,0,.4));
+    background: -webkit-linear-gradient(bottom, rgba(0,0,0,1), rgba(0,0,0,.4));
+    background: -moz-linear-gradient(bottom, rgba(0,0,0,1), rgba(0,0,0,.4));
     }
 h1 {
-    font-family: "raleway";
+    color: rgba(200,200,200,1);
+    font-family: helvetica;
+    //font-family: "raleway";
     //color: #0D2C40;
     letter-spacing: 1px;
     font-weight: 400;
     font-size: 45px;
     margin: 0;
 } 
+button{
+    width : 40%;
+    min-height: 50px;
+    font-size: 30px;
+    font-weight: 500;
+    margin: 30px;
+    border-radius: 35px;
+    clear:both;
+}
 a {
     font-family: "raleway";
-    color: #F14B31;
+    color: rgba(200,200,200,1);
     letter-spacing: 1px;
     font-weight: 600;
     font-size: 18px;
@@ -37,12 +51,16 @@ p{
     font-size: 18px;
     padding: 40px;
 }
+.description{
+    background-color: rgba(200,200,200,.125);
+    border-radius: 40px;
+}
 
 head{
     background-color: teal;
 }
 nav{
-    background-color: bisque;
+    background-color: teal;
 }
 main{
     text-align: center;
@@ -54,8 +72,11 @@ img{
     width: 10%;
 }
 header{
-    background-color: #F15B31;
-    color: #FFFFFF;
+    text-align: center;
+    background: url("https://i.imgur.com/juA6AZs.jpg");
+    background-size: 10;
+    background-position: center;
+    background-repeat: no-repeat;
     padding: 30px 20px 30px 20px;
 }
 footer{
@@ -68,6 +89,7 @@ footer{
 }
 .copyright{
     float: left;
+    margin: 75px;
 }
 .message{
     float: right;
@@ -87,10 +109,53 @@ span{
     color: #F15B31;
     font-weight: 700;
 }
+.myname{
+    color: darkred;
+    font-weight: 1000;
+}
+#hit{
+    color:darkgreen;
+}
+#miss{
+    color:darkred;
+}
 div{}
+.scoreboard{
+    margin:auto;
+    width: 500px;
+    border: #0D2C40;
+    border: solid;
+    background-color:sienna;
+    border-style: ridge;
+    border-radius: 30px;
+    padding: 20px;
+    visibility: hidden;
+
+}
+.scorebox{
+    border: #F15B31;
+    border: solid;
+    height: 30px;
+    max-height: 50px;
+    max-width: 60px;
+    display:inline-block;
+    background-color: lightgrey;
+    text-align: center;
+    border-radius: 15px;
+    margin: auto;
+}
+#matched{
+}
+#time{
+}
+#missed{
+}
+
 #game-board{
     background-color: lightslategray;
     border-style: ridge;
+    margin: 40px auto;
     padding: 2%;
     border-radius: 15px;
+    visibility: hidden;
 }

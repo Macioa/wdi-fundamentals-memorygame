@@ -8,32 +8,38 @@
     </head>
      <header>
         <h1>
-            MEMORY GAME
+            Macioa's<br>Memory
         </h1>
     </header>
    
         <body>
             <nav>
-                <a href="#Instructions">INSTRUCTIONS</a>
+                <a href="#Instructions">Instructions</a>
                 <a href="#game-board">GAME</a>
             </nav>
     <main>
             <h2 id="Instructions">
-                INSTRUCTIONS
+                Match Memory
             </h2>
-            <p>
-                Concentration, also known as Match Match, Memory, Pelmanism, Shinkei-suijaku, Pexeso or simply Pairs, is a card game in which all of the cards are laid face down on a surface and two cards are flipped face up over each turn. The object of the game is to turn over pairs of matching cards.
+            <p class="description">
+                Macioa has lost his memory. Help Macioa by finding all matches in the card deck. Click a card to flip it. Flip a second card. If they have the same value keep them! If not, they will flip back over. Find all matches to win!
             </p>
+            <button id="start" onclick="start()">Start</button>
+            <div class="scoreboard" id="scoreboard">
+                <p class="scorebox" id="matches">Matched<br><span class="hit">0</span></p>
+                <p class="scorebox" id="time">Time<br>0</p>
+                <p class="scorebox" id="missed">Missed<br><span class="miss">0</span></p>
+            </div>
             <div id="game-board" class="board clearfix"></div>
             <script src="js/main.js"></script>           
         </body>
     </main>
     <footer class="clearfix">
         <p class="copyright">
-            Copyright 2017
+            Copyright 2018
         </p>
         <p class="message">
-            Created with &hearts; by <span class="name">GA</span>
+            Created with &hearts; <br>by<br><span class="myname">Ryan Montgomery</span><br>at<br></span> <span class="name">GeneralAssembly<br>Austin</span>
         </p>
     </footer>
 </html>

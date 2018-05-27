@@ -23,10 +23,14 @@ console.log("Up and running!");
         cardImage: "images/king-of-diamonds.png"
     }
 ];*/
-var cards = [];
+
+var cards = [], matchedcards = [];
 var deckColor = "Blue";
 var numMatches = 0;
 var numFails = 0;
+var startTime;
+var cardClearQueue = [];
+var imageClearQueue = [];
 
 function createDeck(){
     for (s=0; s<4; s++)
@@ -73,19 +77,36 @@ function checkForMatch(){
                 {
                     alert("You found a match!");
                     numMatches++;
+                    updateMatchedScore();
+                    matchedcards.push(cardsInPlay[0]);
+                    matchedcards.push(cardsInPlay[1])
                     cardsInPlay = [];
                     imgsInPlay = [];
+                    if (matchedcards.length==cards.length)
+                    {
+                        var endTime = new Date().getTime();
+                        var timeLapsed = endTime - startTime;
+                        timeLapsed=timeLapsed/1000;
+                        alert("YOU WIN! Time: "+timeLapsed+" seconds");
+                        document.getElementById('game-board').innerHTML="";
+                    }
                     return true;
                 }
             else 
                 {
                     alert("Sorry, try again.");
                     numFails++;
+                    updateMissedScore();
+                    cardsInPlay.forEach(function(card){cardClearQueue.push(card)});
+                    imgsInPlay.forEach(function(image){imageClearQueue.push(image)});
+                    cardsInPlay = [];
+                    imgsInPlay = [];
                     setTimeout(function(){
-                        cardsInPlay.forEach(function(card){card.showing=false;});
-                        cardsInPlay = [];
-                        imgsInPlay.forEach(function(image){image.setAttribute('src',"images/"+deckColor+".png")});
-                        imgsInPlay = []; }, 3000);
+                        while (cardClearQueue.length)
+                            cardClearQueue.pop().showing=false;
+                        while (imageClearQueue)
+                            imageClearQueue.pop().setAttribute('src',"images/"+deckColor+".png");
+                        }, 1000);
                     return false;
                 }
             
@@ -105,7 +126,7 @@ function flipCard(){
 
         cardsInPlay.push(cards[cardId]);
         imgsInPlay.push(this);
-        checkForMatch();
+        setTimeout(function(){checkForMatch();},250);
     }
 }
 
@@ -129,14 +150,63 @@ function createBoard(){
         {
             var newCard = document.createElement('img');
             newCard.setAttribute('src',"images/"+deckColor+".png");
-            newCard.setAttribute('data-id',i);
+            newCard.setAttribute('data-id',i-1);
             newCard.addEventListener('click',flipCard);
             boardelement.appendChild(newCard);
         }
+    
 }
 
+function clearBoard(){
+    document.getElementById("game-board").innerHTML="";
+}
 
-createBoard();
+function updateMatchedScore(){
+    document.getElementById('matches').innerHTML="Matched<br>"+numMatches;
+}
+function updateMissedScore(){
+    document.getElementById('missed').innerHTML="Missed<br>"+numFails;
+}
+
+function updateScoreBoard(){
+    document.getElementById("scoreboard").style.visibility="visible";
+    updateMatchedScore();
+    updateMissedScore();
+}
+
+function start(){
+    clearBoard();
+    
+    matchedcards = [];
+    if (deckColor == "Blue")
+        deckColor = "Red";
+    else deckColor = "Blue";
+    numMatches = 0;
+    numFails = 0;
+    cardClearQueue = []; 
+    imageClearQueue = [];
+
+    document.getElementById("start").innerHTML="Restart";
+    updateScoreBoard();
+
+    document.getElementById("game-board").style.visibility="visible";
+    createBoard();
+
+    startTime = new Date().getTime();
+    setInterval(function(){ 
+        var currentTime = new Date().getTime();
+        var timePassed = Math.floor((currentTime-startTime)/1000);
+        var seconds = timePassed%60;
+        var minutes = Math.floor(timePassed/60);
+        seconds = seconds.toString();
+        if (seconds.length==1)
+            seconds = "0"+seconds;
+        document.getElementById('time').innerHTML="Time<br>"+minutes+":"+seconds;
+     }, 1000);
+
+     window.location = "#scoreboard";
+}
+
 
 
 
