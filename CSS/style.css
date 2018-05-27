@@ -46,11 +46,12 @@ nav{
 }
 main{
     text-align: center;
-    width: 850px;
+    width: 85%;  //width: 850px;
     margin: 35px auto 35px auto;
 }
 img{
     margin: 40px 8px 0px 8px;
+    width: 10%;
 }
 header{
     background-color: #F15B31;
@@ -85,4 +86,11 @@ span{
 .name{
     color: #F15B31;
     font-weight: 700;
+}
+div{}
+#game-board{
+    background-color: lightslategray;
+    border-style: ridge;
+    padding: 2%;
+    border-radius: 15px;
 }
