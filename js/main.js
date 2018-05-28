@@ -106,7 +106,7 @@ function checkForMatch(){
                     setTimeout(function(){
                         while (cardClearQueue.length)
                             cardClearQueue.pop().showing=false;
-                        while (imageClearQueue)
+                        while (imageClearQueue.length)
                             imageClearQueue.pop().setAttribute('src',"images/"+deckColor+".png");
                         }, 1000);
                     return false;
