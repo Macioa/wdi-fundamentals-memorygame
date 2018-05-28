@@ -31,6 +31,7 @@ var numFails = 0;
 var startTime;
 var cardClearQueue = [];
 var imageClearQueue = [];
+var gameTimer;
 
 function createDeck(){
     for (s=0; s<4; s++)
@@ -88,6 +89,7 @@ function checkForMatch(){
                         var timeLapsed = endTime - startTime;
                         timeLapsed=timeLapsed/1000;
                         alert("YOU WIN! Time: "+timeLapsed+" seconds");
+                        clearInterval(gameTimer);
                         document.getElementById('game-board').innerHTML="";
                     }
                     return true;
@@ -193,7 +195,7 @@ function start(){
     createBoard();
 
     startTime = new Date().getTime();
-    setInterval(function(){ 
+    gameTimer = setInterval(function(){ 
         var currentTime = new Date().getTime();
         var timePassed = Math.floor((currentTime-startTime)/1000);
         var seconds = timePassed%60;
