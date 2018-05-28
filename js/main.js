@@ -5,22 +5,26 @@ console.log("Up and running!");
     {
         rank: "queen",
         suit: "hearts",
-        cardImage: "images/queen-of-hearts.png"
+        cardImage: "images/queen-of-hearts.png",
+        showing: false
     },
     {
         rank: "queen",
         suit: "diamonds",
-        cardImage: "images/queen-of-diamonds.png"
+        cardImage: "images/queen-of-diamonds.png",
+        showing: false
     },
     {
         rank: "king",
         suit: "hearts",
-        cardImage: "images/king-of-hearts.png"
+        cardImage: "images/king-of-hearts.png",
+        showing: false
     },
     {
         rank: "king",
         suit: "diamonds",
-        cardImage: "images/king-of-diamonds.png"
+        cardImage: "images/king-of-diamonds.png", 
+        showing: false
     }
 ];*/
 
@@ -76,44 +80,61 @@ function checkForMatch(){
         {
             if (cardsInPlay[0].rank==cardsInPlay[1].rank)
                 {
-                    alert("You found a match!");
-                    numMatches++;
-                    updateMatchedScore();
-                    matchedcards.push(cardsInPlay[0]);
-                    matchedcards.push(cardsInPlay[1])
-                    cardsInPlay = [];
-                    imgsInPlay = [];
-                    if (matchedcards.length==cards.length)
-                    {
-                        var endTime = new Date().getTime();
-                        var timeLapsed = endTime - startTime;
-                        timeLapsed=timeLapsed/1000;
-                        alert("YOU WIN! Time: "+timeLapsed+" seconds");
-                        clearInterval(gameTimer);
-                        document.getElementById('game-board').innerHTML="";
-                    }
+                    Match();
                     return true;
                 }
             else 
                 {
-                    alert("Sorry, try again.");
-                    numFails++;
-                    updateMissedScore();
-                    cardsInPlay.forEach(function(card){cardClearQueue.push(card)});
-                    imgsInPlay.forEach(function(image){imageClearQueue.push(image)});
-                    cardsInPlay = [];
-                    imgsInPlay = [];
-                    setTimeout(function(){
-                        while (cardClearQueue.length)
-                            cardClearQueue.pop().showing=false;
-                        while (imageClearQueue.length)
-                            imageClearQueue.pop().setAttribute('src',"images/"+deckColor+".png");
-                        }, 1000);
+                    Miss();
                     return false;
                 }
             
         }
     else return true;
+
+    function Miss() {
+        alert("Sorry, try again.");
+        numFails++;
+        updateMissedScoreboard();
+        //remove cards from play and move them to clean up queue
+        cardsInPlay.forEach(function (card) { cardClearQueue.push(card); });
+        imgsInPlay.forEach(function (image) { imageClearQueue.push(image); });
+        cardsInPlay = [];
+        imgsInPlay = [];
+        unflipUnmatchedCards();
+
+        function unflipUnmatchedCards() {
+            setTimeout(function () {
+                while (cardClearQueue.length)
+                    cardClearQueue.pop().showing = false;
+                while (imageClearQueue.length)
+                    imageClearQueue.pop().setAttribute('src', "images/" + deckColor + ".png");
+            }, 1000);
+        }
+    }
+
+    function Match() {
+        alert("You found a match!");
+        numMatches++;
+        updateMatchedScoreboard();
+        matchedcards.push(cardsInPlay[0]);
+        matchedcards.push(cardsInPlay[1]);
+        cardsInPlay = [];
+        imgsInPlay = [];
+        if (matchedcards.length == cards.length)
+            endGame();
+    }
+}
+
+
+
+function endGame(){
+    var endTime = new Date().getTime();
+    var timeLapsed = endTime - startTime;
+    timeLapsed=timeLapsed/1000;
+    alert("YOU WIN! Time: "+timeLapsed+" seconds");
+    clearInterval(gameTimer);
+    document.getElementById('game-board').innerHTML="";
 }
 
 function flipCard(){
@@ -163,17 +184,17 @@ function clearBoard(){
     document.getElementById("game-board").innerHTML="";
 }
 
-function updateMatchedScore(){
+function updateMatchedScoreboard(){
     document.getElementById('matches').innerHTML="Matched<br>"+numMatches;
 }
-function updateMissedScore(){
+function updateMissedScoreboard(){
     document.getElementById('missed').innerHTML="Missed<br>"+numFails;
 }
 
 function updateScoreBoard(){
     document.getElementById("scoreboard").style.visibility="visible";
-    updateMatchedScore();
-    updateMissedScore();
+    updateMatchedScoreboard();
+    updateMissedScoreboard();
 }
 
 function start(){
