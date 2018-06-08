@@ -153,7 +153,25 @@ function flipCard(){
     }
 }
 
-function shuffleCards(deck){
+function shuffleCards(deck, numShuffles = 3){ //simulates the shuffling of a deck of cards
+    console.log(numShuffles);
+    if (numShuffles>1)
+        deck = shuffleCards(deck, numShuffles-1);
+    var splitIndex = Math.floor(deck.length/2)-1;
+    var part1 = deck.slice(0,splitIndex);
+    var part2 = deck.slice(splitIndex+1,deck.length-1)
+    var newDeck = []
+    while (part1.length||part2.length){
+        var coin = Math.floor(Math.random()*2);
+        if (coin&&part1.length)
+            newDeck.push(part1.pop(0));
+        else if (part2.length)
+            newDeck.push(part2.pop(0));
+    }
+    return newDeck;
+}
+
+function randomSwapCards(deck){
     for (i = 0; i<deck.length/2+1; i++)
     {
         var firstIndex = Math.floor(Math.random()*deck.length);
@@ -176,6 +194,7 @@ function createBoard(){
             newCard.setAttribute('data-id',i-1);
             newCard.addEventListener('click',flipCard);
             boardelement.appendChild(newCard);
+            cards[i-1].showing = false;
         }
     
 }
